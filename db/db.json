@@ -1,0 +1,37 @@
+{
+  "users": [
+    {
+      "id": "9230",
+      "username": "yomogan",
+      "password": "Yomogan1",
+      "email": "yomogan@gmail.com",
+      "orders": [
+        {
+          "orderId": 1729470032043,
+          "orderDate": "2024-10-21T00:20:32.043Z",
+          "items": [
+            {
+              "productId": "286057",
+              "title": "BAJERAS COMBI 100% LISO 200H",
+              "color": "001",
+              "size": "000812",
+              "price": 32.72,
+              "image": "http://www.es-tela.com/fotos/med/TC001738-001_1.jpg",
+              "quantity": 1
+            },
+            {
+              "productId": "286058",
+              "title": "BAJERAS COMBI 100% LISO 200H",
+              "color": "001",
+              "size": "000891",
+              "price": 34.93,
+              "image": "http://www.es-tela.com/fotos/med/TC001738-001_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 67.65
+        }
+      ]
+    }
+  ]
+}

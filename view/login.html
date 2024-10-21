@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Catálogo</title>
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+</head>
+
+<body>
+    <div id="header-placeholder"></div> 
+    <main class="main-login">
+        <form id="login-form">
+            <h2>Inicio de Sesión</h2><hr><br>
+
+            <label for="username">Usuario:</label>
+            <input type="text" id="username" name="username" required>
+        
+            <label for="password">Contraseña:</label>
+            <input type="password" id="password" name="password" required>
+        
+            <button type="submit">Iniciar sesión</button>
+        </form>
+    </main>
+    <div id="login-message"></div>
+
+    <div id="footer-placeholder"></div>
+    <script src="../js/app.js"></script>
+    <script src="../controller/loginController.js"></script>
+</body>
+
+</html>
