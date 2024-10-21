@@ -84,8 +84,14 @@ async function fetchProductDetails(refProducto) {
         console.log('Detalles del producto:', productDetails);
         saveToRecentlyViewed(productDetails);
         displayProductDetails(productDetails); // Llamar a la función para mostrar los detalles del producto
-    } catch (error) {
+        } catch (error) {
         console.error('Error al obtener los detalles del producto:', error);
+        Swal.fire({
+            icon: 'error',
+            title: 'Error',
+            text: 'Hubo un problema al obtener los detalles del producto. Por favor, intenta de nuevo más tarde.',
+            confirmButtonText: 'OK'
+        });
     }
 }
 // Función para guardar los últimos tres productos visitados
