@@ -94,7 +94,6 @@ function checkLoginStatus() {
 function logoutUser() {
     // Eliminar el usuario de localStorage
     localStorage.removeItem('loggedInUser');
-
     // Mostrar mensaje de logout correcto
     Swal.fire({
         icon: 'success',
@@ -102,7 +101,7 @@ function logoutUser() {
         text: 'Has cerrado sesión correctamente',
         confirmButtonText: 'OK'
     }).then(() => {
-        // Redirigir al usuario a la página principal o de login
+        // Redirigir al usuario
         window.location.href = '/index.html';
     });
 }
@@ -113,7 +112,6 @@ function updateCartHighlight() {
     if (loggedInUser) {
         const userCartKey = `cart_${loggedInUser.username}`;
         const cartItems = JSON.parse(localStorage.getItem(userCartKey)) || [];
-
         const cartLink = document.querySelector('nav ul li a[href="/view/cart.html"]');
         if (cartItems.length > 0) {
             cartLink.classList.add('cart-highlight');

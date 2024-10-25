@@ -1,17 +1,28 @@
-// URL base de json-server
 const apiUrl = 'http://localhost:3005/users'; // Endpoint de usuarios en json-server
 
 document.getElementById('register-form').addEventListener('submit', async (e) => {
-    e.preventDefault(); // Prevenir el envío del formulario para evitar el recargo de la página
+    e.preventDefault(); // Evitar el envío del formulario por defecto para poder validar los campos
     
     const username = document.getElementById('username').value;
     const password = document.getElementById('password').value;
     const email = document.getElementById('email').value;
 
+    // Regex para validar el formato del email
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
+    if (!emailRegex.test(email)) {
+        Swal.fire({
+            icon: 'error',
+            title: 'Email inválido',
+            text: 'Por favor, introduce un email válido en el formato x@x.x.'
+        });
+        return;
+    }
+
     if (username && password && email) {
         const newUser = await registerUser(username, password, email);
         if (newUser) {
-// Este mensaje solo saldrá un segundo y no redireccionará porque como se modifica el db.json este sv se reinicia y no le da tiempo a terminar la ejecución del sweet alert.
+            // Este mensaje solo saldrá un segundo y no redireccionará porque como se modifica el db.json este sv se reinicia y no le da tiempo a terminar la ejecución del sweet alert.
             Swal.fire({
                 icon: 'success',
                 title: 'Registro exitoso',
