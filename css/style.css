@@ -132,6 +132,7 @@ header nav ul li a:hover {
     grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     gap: 1rem;
+    margin-right: 15rem;
 }
 .recent-item {
     background-color: #f9f9f9;
@@ -533,6 +534,12 @@ footer {
     color: white;
     transform: scale(1.1);
 }
+.color-option.active,
+.size-option.active {
+    background-color: #ff6f00;
+    color: white;
+    transform: scale(1.2);
+}
 .color-option {
     text-transform: capitalize;
 }
@@ -774,6 +781,10 @@ form button:hover {
     .recently-viewed-items {
         grid-template-columns: 1fr;
     }
+    .main-index {
+        flex-direction: column;
+        margin-right: 0;
+    }
     .btn-auth {
         padding: 0.5rem;
         font-size: 0.8rem;
@@ -843,7 +854,9 @@ form button:hover {
         padding-right: 0;
     }
     .recently-viewed-items {
+        display: grid;
         grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
     }
     .product {
         flex: 1 1 calc(50% - 2rem);
@@ -855,7 +868,13 @@ form button:hover {
         padding: 1rem;
     }
     .recently-viewed-items {
+        display: grid;
         grid-template-columns: repeat(1, 1fr);
+        justify-content: center;
+    }
+    .main-index {
+        flex-direction: column;
+        margin-right: 0;
     }
     .btn-auth {
         padding: 0.5rem;
