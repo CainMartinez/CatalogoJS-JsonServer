@@ -343,6 +343,8 @@ footer {
     padding: 1rem;
     bottom: 0;
     left: 0;
+    position: fixed;
+    margin-top: 1rem;
 }
 .main-index {
     display: flex;
@@ -351,6 +353,7 @@ footer {
     max-width: 1200px;
     margin: 0 auto;
     padding-bottom: 3rem;
+    margin-right: 250px;
 }
 .main-login {
     flex: 1;
@@ -363,11 +366,16 @@ footer {
     margin-top: 5rem;
 }
 .familias-menu {
-    padding-top: 5em;
-    background-color: #f4f4f4;
+    margin-top: 2rem;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 250px;
+    height: 100vh;
     padding: 1rem;
-    padding-bottom: 2em;
-    margin-left: auto;
+    overflow-y: auto;
+    background-color: #f9f9f9; 
+    box-shadow: -4px 0 8px rgba(0, 0, 0, 0.1);
 }
 .subfamilias-container {
     display: none;
@@ -740,6 +748,7 @@ form button:hover {
     display: flex;
     justify-content: space-between;
     margin-top: 2rem;
+    margin-bottom: 3rem;
 }
 .section-cart button {
     background-color: #ff6f00;
