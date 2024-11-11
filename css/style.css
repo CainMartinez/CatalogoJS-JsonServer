@@ -364,7 +364,6 @@ footer {
 }
 .familias-menu {
     padding-top: 5em;
-    width: 60%;
     background-color: #f4f4f4;
     padding: 1rem;
     padding-bottom: 2em;
@@ -582,7 +581,7 @@ tbody tr:nth-child(even) {
 }
 #productos {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: 1fr;
     gap: 1rem;
 }
 .product {
