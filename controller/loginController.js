@@ -13,19 +13,10 @@ document.getElementById('login-form').addEventListener('submit', async function(
 
         // Validar si el usuario existe con el username y password correctos
         const user = users.find(user => user.username === username && user.password === password);
-
         if (user) {
-            Swal.fire({
-                icon: 'success',
-                title: 'Bienvenido',
-                text: `Bienvenido, ${user.username}!`
-            }).then(() => {
-                // Guardar la sesión del usuario en localStorage
-                localStorage.setItem('loggedInUser', JSON.stringify(user));
-
-                // Redirigir al catálogo de productos
-                window.location.href = '/view/product.html';
-            });
+            localStorage.setItem('loggedInUser', JSON.stringify(user));
+            window.location.href = '/view/product.html';
+            
         } else {
             Swal.fire({
                 icon: 'error',

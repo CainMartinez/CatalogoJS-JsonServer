@@ -13,7 +13,7 @@ function displayRecentlyViewed() {
     const recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
 
     if (recentlyViewed.length > 0) {
-        let recentlyViewedHTML = '<h2>Últimos Visitados</h2><div class="recently-viewed-items">';
+        let recentlyViewedHTML = '<h2>Últimos Visitados por nuestros clientes</h2><div class="recently-viewed-items">';
 
         recentlyViewed.forEach(product => {
             recentlyViewedHTML += `
@@ -32,30 +32,33 @@ function displayRecentlyViewed() {
 
 function loadHeaderAndFooter() {
     const headerHTML = `
-        <header>
-            <nav>
-                <ul>
-                    <li><a href="/index.html">Inicio</a></li>
-                    <li><a href="/view/product.html">Catálogo</a></li>
-                    <li class="historial hidden"><a href="/view/order.html">Historial</a></li>
-                    <li class="carrito hidden"><a href="/view/cart.html"><i class="fas fa-shopping-cart"></i>&nbspCarrito</a></li>
-                </ul>
-            </nav>
-            <div class="logo">
-                <h1>Catálogo</h1>
-            </div>
+        <nav>
+            <ul>
+                <li><a href="/view/product.html">MediTejidos</a></li>
+            </ul>
             <div class="auth">
                 <a href="/view/login.html" class="btn-auth login-btn">Iniciar Sesión</a>
                 <a href="/view/register.html" class="btn-auth register-btn">Crear Cuenta</a>
-                <a href="#" class="btn-auth logout-btn hidden">Cerrar Sesión</a>
+                <div class="dropdown hidden">
+                    <span class="dropdown-toggle">Bienvenido, Usuario</span>
+                    <ul class="dropdown-menu">
+                        <li class="historial">
+                            <a href="/view/order.html"><i class="fas fa-history"></i>&nbsp;Historial</a>
+                        </li>
+                        <li>
+                            <a href="/view/cart.html"><i class="fas fa-shopping-cart"></i>&nbsp;Carrito</a>
+                        </li>
+                        <li>
+                            <a href="#" class="btn-auth logout-btn">Cerrar Sesión</a>
+                        </li>
+                    </ul>
+                </div>
             </div>
-        </header>
+        </nav>
     `;
 
     const footerHTML = `
-        <footer>
             <p>&copy; 2024 Catálogo Digital - Todos los derechos reservados</p>
-        </footer>
     `;
 
     // Insertar header y footer dinámicamente
@@ -64,30 +67,35 @@ function loadHeaderAndFooter() {
 
     // Verificar el estado de login del usuario
     checkLoginStatus();
-
+    if(checkLoginStatus()){
+        updateCartHighlight();
+    }
     // Actualizar el highlight del carrito en el header
-    updateCartHighlight();
 }
 
 function checkLoginStatus() {
     const loggedInUser = JSON.parse(localStorage.getItem('loggedInUser'));
 
     if (loggedInUser) {
-        // Oculta botones de login y registro
+        // Ocultar botones de login y registro
         document.querySelector('.login-btn').classList.add('hidden');
         document.querySelector('.register-btn').classList.add('hidden');
 
-        // Muestra botones de carrito e historial
-        document.querySelector('.carrito').classList.remove('hidden');
-        document.querySelector('.historial').classList.remove('hidden');
-
-        // Muestra el botón de logout y el nombre del usuario
-        document.querySelector('.logout-btn').classList.remove('hidden');
-        const authDiv = document.querySelector('.auth');
-        authDiv.insertAdjacentHTML('afterbegin', `<span>Bienvenido, ${loggedInUser.username}</span>`);
+        // Mostrar el menú desplegable y actualizar el nombre del usuario
+        const dropdown = document.querySelector('.dropdown');
+        dropdown.classList.remove('hidden');
+        dropdown.querySelector('.dropdown-toggle').textContent = `Bienvenido, ${loggedInUser.username}`;
 
         // Añadir evento de logout
         document.querySelector('.logout-btn').addEventListener('click', logoutUser);
+    } else {
+        // Mostrar solo los botones de login y registro si no hay usuario logueado
+        document.querySelector('.login-btn').classList.remove('hidden');
+        document.querySelector('.register-btn').classList.remove('hidden');
+
+        // Asegurarse de ocultar el menú desplegable, carrito e historial
+        document.querySelector('.dropdown').classList.add('hidden');
+        document.querySelector('.carrito').classList.add('hidden');
     }
 }
 
@@ -95,15 +103,8 @@ function logoutUser() {
     // Eliminar el usuario de localStorage
     localStorage.removeItem('loggedInUser');
     // Mostrar mensaje de logout correcto
-    Swal.fire({
-        icon: 'success',
-        title: 'Sesión cerrada',
-        text: 'Has cerrado sesión correctamente',
-        confirmButtonText: 'OK'
-    }).then(() => {
-        // Redirigir al usuario
-        window.location.href = '/index.html';
-    });
+    window.location.href = 'product.html';
+    
 }
 
 // Función para actualizar el highlight del carrito en el header
@@ -112,11 +113,19 @@ function updateCartHighlight() {
     if (loggedInUser) {
         const userCartKey = `cart_${loggedInUser.username}`;
         const cartItems = JSON.parse(localStorage.getItem(userCartKey)) || [];
-        const cartLink = document.querySelector('nav ul li a[href="/view/cart.html"]');
+        
+        // Referencia a los elementos
+        const cartCount = document.querySelector('.cart-count');
+        const welcomeSpan = document.querySelector('.dropdown-toggle');
+
+        // Si hay artículos, resaltar el span de bienvenida y mostrar el contador
         if (cartItems.length > 0) {
-            cartLink.classList.add('cart-highlight');
+            welcomeSpan.classList.add('highlight');
+            cartCount.classList.remove('hidden');
+            cartCount.textContent = cartItems.length; // Muestra la cantidad de artículos
         } else {
-            cartLink.classList.remove('cart-highlight');
+            welcomeSpan.classList.remove('highlight');
+            cartCount.classList.add('hidden');
         }
     }
 }

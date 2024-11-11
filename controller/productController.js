@@ -1,7 +1,7 @@
 const apiUrl = 'https://www.es-tela.com/api/?cli=003328&apikey=453971e94725572b4d171a6805d1fb95';
 
-let selectedColor = null;  // Almacena el color seleccionado
-let selectedSize = null;   // Almacena el tamaño seleccionado
+let selectedColor = null;
+let selectedSize = null; 
 
 // Función para obtener las familias de productos desde la API
 async function fetchFamilies() {
@@ -66,6 +66,48 @@ function displaySubfamilies(subfamilies, subfamilyContainer) {
         subfamilyContainer.appendChild(subfamilyDiv);
     });
 }
+async function fetchProducts(refSubfamilia, productContainer) {
+    try {
+        // Resetea las variables cuando cambias de subfamilia
+        selectedColor = null;
+        selectedSize = null;
+
+        const response = await fetch(`${apiUrl}&r=es/productosEnSubfamilia/${refSubfamilia}`);
+        if (!response.ok) {
+            throw new Error(`Error en la respuesta de la API: ${response.status}`);
+        }
+        const data = await response.json();
+        displayProducts(data, productContainer);
+    } catch (error) {
+        console.error('Error al obtener los productos de la subfamilia:', error);
+    }
+}
+// Función para mostrar productos
+function displayProducts(products, productContainer) {
+    productContainer.innerHTML = ''; // Limpiar el contenedor
+
+    if (products.length === 0) {
+        productContainer.innerHTML = '<p>No hay productos disponibles.</p>';
+        return;
+    }
+
+    products.forEach(product => {
+        const productDiv = document.createElement('div');
+        productDiv.classList.add('product');
+
+        productDiv.innerHTML = `
+            <h4>${product.descripcion}</h4>
+            <img src="${product.img_ppal_min}" alt="${product.descripcion}">
+        `;
+
+        productDiv.addEventListener('click', () => {
+            console.log(`Producto seleccionado: ${product.refProducto}`);
+            fetchProductDetails(product.refProducto);
+        });
+
+        productContainer.appendChild(productDiv);
+    });
+}
 
 // Resetea las variables selectedColor y selectedSize cuando cambies de producto
 async function fetchProductDetails(refProducto) {
@@ -98,36 +140,24 @@ async function fetchProductDetails(refProducto) {
 function saveToRecentlyViewed(productDetails) {
     let recentlyViewed = JSON.parse(localStorage.getItem('recentlyViewed')) || [];
 
-    // Si ya hay 3 productos en la lista, elimina el primero
-    if (recentlyViewed.length >= 3) {
-        recentlyViewed.shift();
-    }
+    // Verificar si el producto ya existe en la lista
+    const productExists = recentlyViewed.some(product => product.refProducto === productDetails.refProducto);
 
-    // Agrega el producto actual al final de la lista
-    recentlyViewed.push({
-        refProducto: productDetails.refProducto,
-        titulo: productDetails.titulo || productDetails.descripcion,
-        img: productDetails.imagenes ? productDetails.imagenes['1'].url_min : ''
-    });
-
-    // Guarda la lista actualizada en localStorage
-    localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
-}
-// Resetea las opciones de color y talla cuando cambies de subfamilia
-async function fetchProducts(refSubfamilia, productContainer) {
-    try {
-        // Resetea las variables cuando cambias de subfamilia
-        selectedColor = null;
-        selectedSize = null;
-
-        const response = await fetch(`${apiUrl}&r=es/productosEnSubfamilia/${refSubfamilia}`);
-        if (!response.ok) {
-            throw new Error(`Error en la respuesta de la API: ${response.status}`);
+    if (!productExists) {
+        // Si ya hay 3 productos en la lista, elimina el primero
+        if (recentlyViewed.length >= 3) {
+            recentlyViewed.shift();
         }
-        const data = await response.json();
-        displayProducts(data, productContainer);
-    } catch (error) {
-        console.error('Error al obtener los productos de la subfamilia:', error);
+
+        // Agrega el producto actual al final de la lista
+        recentlyViewed.push({
+            refProducto: productDetails.refProducto,
+            titulo: productDetails.titulo || productDetails.descripcion,
+            img: productDetails.imagenes ? productDetails.imagenes['1'].url_min : ''
+        });
+
+        // Guarda la lista actualizada en localStorage
+        localStorage.setItem('recentlyViewed', JSON.stringify(recentlyViewed));
     }
 }
 
@@ -222,62 +252,6 @@ async function displayProductDetails(productDetails) {
     });
 }
 
-// Función para mostrar productos
-function displayProducts(products, productContainer) {
-    productContainer.innerHTML = ''; // Limpiar el contenedor
-
-    if (products.length === 0) {
-        productContainer.innerHTML = '<p>No hay productos disponibles.</p>';
-        return;
-    }
-
-    products.forEach(product => {
-        const productDiv = document.createElement('div');
-        productDiv.classList.add('product');
-
-        productDiv.innerHTML = `
-            <h4>${product.descripcion}</h4>
-            <img src="${product.img_ppal_min}" alt="${product.descripcion}">
-        `;
-
-        productDiv.addEventListener('click', () => {
-            console.log(`Producto seleccionado: ${product.refProducto}`);
-            fetchProductDetails(product.refProducto);
-        });
-
-        productContainer.appendChild(productDiv);
-    });
-}
-
-// Función para obtener el producto genérico (con variantes) y sus artículos
-async function fetchGenericProduct(refProducto) {
-    try {
-        // 1. Obtener el producto genérico
-        const response = await fetch(`https://www.es-tela.com/api/?r=es/producto/${refProducto}&cli=003328&apikey=453971e94725572b4d171a6805d1fb95`);
-        if (!response.ok) throw new Error('Error al obtener el producto genérico.');
-        const productData = await response.json(); // Obtenemos el producto genérico
-
-        // 2. Crear un array para almacenar las promesas de los artículos
-        const articlePromises = Object.keys(productData.refArticulosHijos).map(async (articleId) => {
-            const articleResponse = await fetch(`https://www.es-tela.com/api/?r=es/articulo/${articleId}&cli=003328&apikey=453971e94725572b4d171a6805d1fb95`);
-            if (!articleResponse.ok) throw new Error(`Error al obtener el artículo con ID ${articleId}`);
-            const articleData = await articleResponse.json(); // Obtener el artículo específico
-            return articleData; // Retorna el artículo específico
-        });
-
-        // 3. Esperar a que todas las promesas se resuelvan
-        const articles = await Promise.all(articlePromises);
-
-        // 4. Combinar el producto genérico con sus artículos
-        productData.articulosHijos = articles; // Agregar la propiedad 'articles' al producto genérico
-
-        return productData; // Retorna el objeto combinado
-    } catch (error) {
-        console.error('Error en fetchGenericProduct:', error);
-        return null; // Retornamos null en caso de error
-    }
-}
-
 // Función para mostrar detalles del artículo basado en color y talla
 function displayPriceAndDetails(selectedColor, selectedSize, productDetails) {
     const productContainer = document.getElementById('productos');
@@ -368,5 +342,33 @@ function initCarousel() {
     };
 }
 
+// Función para obtener el producto genérico (con variantes) y sus artículos
+async function fetchGenericProduct(refProducto) {
+    try {
+        // 1. Obtener el producto genérico
+        const response = await fetch(`https://www.es-tela.com/api/?r=es/producto/${refProducto}&cli=003328&apikey=453971e94725572b4d171a6805d1fb95`);
+        if (!response.ok) throw new Error('Error al obtener el producto genérico.');
+        const productData = await response.json(); // Obtenemos el producto genérico
+
+        // 2. Crear un array para almacenar las promesas de los artículos
+        const articlePromises = Object.keys(productData.refArticulosHijos).map(async (articleId) => {
+            const articleResponse = await fetch(`https://www.es-tela.com/api/?r=es/articulo/${articleId}&cli=003328&apikey=453971e94725572b4d171a6805d1fb95`);
+            if (!articleResponse.ok) throw new Error(`Error al obtener el artículo con ID ${articleId}`);
+            const articleData = await articleResponse.json(); // Obtener el artículo específico
+            return articleData; // Retorna el artículo específico
+        });
+
+        // 3. Esperar a que todas las promesas se resuelvan
+        const articles = await Promise.all(articlePromises);
+
+        // 4. Combinar el producto genérico con sus artículos
+        productData.articulosHijos = articles; // Agregar la propiedad 'articles' al producto genérico
+
+        return productData; // Retorna el objeto combinado
+    } catch (error) {
+        console.error('Error en fetchGenericProduct:', error);
+        return null; // Retornamos null en caso de error
+    }
+}
 
 fetchFamilies();

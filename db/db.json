@@ -46,6 +46,22 @@
             }
           ],
           "total": 170.23
+        },
+        {
+          "orderId": 1730313678985,
+          "orderDate": "2024-10-30T18:41:18.985Z",
+          "items": [
+            {
+              "productId": "350545",
+              "title": "J.S. SATÉN LISO 300H BIES",
+              "color": "249",
+              "size": "000553",
+              "price": 113.41,
+              "image": "http://www.es-tela.com/fotos/med/TC004745-249_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 113.41
         }
       ]
     },
@@ -55,6 +71,134 @@
       "password": "soyputo",
       "email": "alvaro@lesbiana.empoderada",
       "orders": []
+    },
+    {
+      "id": "7499",
+      "username": "cain",
+      "password": "camarber1",
+      "email": "cain@cain.es",
+      "orders": [
+        {
+          "orderId": 1730316080890,
+          "orderDate": "2024-10-30T19:21:20.890Z",
+          "items": [
+            {
+              "productId": "376793",
+              "title": "F.N. COMBI 100% LISO 600H CLIPS",
+              "color": "001",
+              "size": "000060",
+              "price": 146.12,
+              "image": "http://www.es-tela.com/fotos/med/TC005301-001_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 146.12
+        },
+        {
+          "orderId": 1730388239110,
+          "orderDate": "2024-10-31T15:23:59.110Z",
+          "items": [
+            {
+              "productId": "411018",
+              "title": "PIE DE CAMA VALIRA ALG. REC.",
+              "color": "138",
+              "size": "001198",
+              "price": 65.44,
+              "image": "http://www.es-tela.com/fotos/med/TC005647-138_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 65.44
+        },
+        {
+          "orderId": 1730388642829,
+          "orderDate": "2024-10-31T15:30:42.829Z",
+          "items": [
+            {
+              "productId": "396290",
+              "title": "F. ALMOHADAS COMBI 100% CALA ",
+              "color": "254",
+              "size": "001078",
+              "price": 15.01,
+              "image": "http://www.es-tela.com/fotos/med/TC000941-254_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 15.01
+        },
+        {
+          "orderId": 1730761406910,
+          "orderDate": "2024-11-04T23:03:26.910Z",
+          "items": [
+            {
+              "productId": "403018",
+              "title": "J. S. SATÉN LISO 300H BIES",
+              "color": "364",
+              "size": "000553",
+              "price": 113.41,
+              "image": "http://www.es-tela.com/fotos/med/TC004745-364_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 113.41
+        },
+        {
+          "orderId": 1731284397781,
+          "orderDate": "2024-11-11T00:19:57.781Z",
+          "items": [
+            {
+              "productId": "350543",
+              "title": "J.S. SATÉN LISO 300H BIES",
+              "color": "249",
+              "size": "000161",
+              "price": 133.82,
+              "image": "http://www.es-tela.com/fotos/med/TC004745-249_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 133.82
+        }
+      ]
+    },
+    {
+      "id": "62d6",
+      "username": "edu",
+      "password": "camarber1",
+      "email": "edu@edu.es",
+      "orders": [
+        {
+          "orderId": 1731291850300,
+          "orderDate": "2024-11-11T02:24:10.300Z",
+          "items": [
+            {
+              "productId": "204996",
+              "title": "J.F.N. 100% LISO 300H ",
+              "color": "001",
+              "size": "000008",
+              "price": 164.57,
+              "image": "http://www.es-tela.com/fotos/med/TC004849-001_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 164.57
+        },
+        {
+          "orderId": 1731291927163,
+          "orderDate": "2024-11-11T02:25:27.163Z",
+          "items": [
+            {
+              "productId": "252439",
+              "title": "J.S. SATÉN LISTADO 300H",
+              "color": "001",
+              "size": "000006",
+              "price": 95.2,
+              "image": "http://www.es-tela.com/fotos/med/TC004880-001_1.jpg",
+              "quantity": 1
+            }
+          ],
+          "total": 95.2
+        }
+      ]
     }
   ]
 }

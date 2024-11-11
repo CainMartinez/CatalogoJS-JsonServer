@@ -12,24 +12,101 @@ body {
     color: #333;
 }
 
-/* Header */
 header {
-    position: relative;
+    display: flex;
+    align-items: center;
     width: 100%;
-    background-color: #ff6f00;
+    background: radial-gradient(circle, #fa6a46, #feb47b);
     color: white;
     padding: 1rem 2rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    text-align: center;
     z-index: 1000;
+    position: fixed;
+}
+/* Estilos para el contenedor <nav> */
+/* Estilos para el contenedor <nav> */
+nav {
+    display: flex;
+    justify-content: space-between;    /* Asegura que los elementos estén en los extremos */
+    align-items: center;               /* Centra verticalmente */
+    padding: 1rem;
+    width: 100%;
+}
+
+/* Estilos para el <ul> */
+nav ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+}
+
+/* Estilos para los elementos dentro del <ul> */
+nav ul li {
+    margin-right: 1.5rem;
+}
+
+/* Estilos para los enlaces de <ul> */
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+/* Estilos para el contenedor de autenticación */
+.auth {
+    display: flex;
+    align-items: center;
+}
+/* Estilo para el botón de saludo */
+.dropdown-toggle {
+    top: 100%;
+    cursor: pointer;
+    font-weight: bold;
+    color: #333;
+    padding: 0.5rem;
+}
+
+/* Menú desplegable */
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    width: 150px;
+    padding: 0.5rem 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+}
+
+.dropdown-menu li {
+    padding: 0.5rem;
+    text-align: left;
+}
+
+.dropdown-menu li a {
+    color: #333;
+    text-decoration: none;
+    display: block;
+}
+
+.dropdown-menu li a:hover {
+    background-color: #f0f0f0c2;
+    transition: 0.5s;
+}
+
+/* Mostrar menú al pasar el ratón sobre el contenedor .auth */
+.auth:hover .dropdown-menu {
+    display: block;
+    transition: 0.7s;
 }
 header nav ul {
     list-style: none;
     display: flex;
     gap: 0.5rem;
-    margin-left: auto;
+    margin: 0;
 }
 
 header nav ul li a {
@@ -39,24 +116,17 @@ header nav ul li a {
     font-size: 0.9em;
     transition: color 0.3s;
 }
+.carrito a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    font-size: 0.9em;
+    transition: color 0.3s;
+}
 
 header nav ul li a:hover {
     color: #f0e68c;
-}
-
-header .logo {
-    text-align: center;
-    flex-grow: 1;
-}
-
-header .logo h1 {
-    color: white;
-    font-size: 1.8rem;
-    text-align: center;
-}
-
-header .auth {
-    margin-left: auto;
+    transition: 0.5s;
 }
 
 .btn-auth {
@@ -72,6 +142,7 @@ header .auth {
 .btn-auth:hover {
     background-color: #f0e68c;
     color: #333;
+    transition: 0.5s;
 }
 .recently-viewed {
     margin-top: 2rem;
@@ -85,7 +156,8 @@ header .auth {
 }
 
 .recently-viewed-items {
-    display: flex;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     justify-content: center;
     gap: 1rem;
 }
@@ -99,7 +171,7 @@ header .auth {
 }
 
 .recent-item img {
-    max-width: 100px;
+    max-width: 400px;
     height: auto;
     margin-bottom: 0.5rem;
 }
@@ -108,23 +180,36 @@ header .auth {
     font-size: 0.9rem;
     color: #666;
 }
+
 /* Hero Section */
 #hero {
     background-size: cover;
     background-position: center;
     height: 30vh;
     display: flex;
-    align-items: center;
+    align-items: left;
     justify-content: center;
     text-align: center;
+    padding-bottom: 53em;
 }
 
 #hero .hero-content {
     background: rgba(255, 255, 255, 0.8);
     padding: 2rem;
     border-radius: 10px;
+    align-items: center;
+    gap: 1rem;
 }
-
+.hero-content {
+    align-items: center;
+    gap: 1em;
+}
+.hero-content img.logo {
+    max-width: 38rem; 
+    height: auto;
+    border-radius: 20%;
+    padding-top: 5em;
+}
 #hero h2 {
     font-size: 2rem;
     color: #ff6f00;
@@ -152,6 +237,28 @@ header .auth {
     border: 1px solid #ff6f00;
     font-weight: bold;
     transition: 0.5s;
+}
+.dropdown {
+    position: relative;
+}
+/* Highlight para el span de bienvenida */
+.dropdown-toggle.highlight {
+    color: #ff6f00;
+    font-weight: bold;
+    text-decoration: underline;
+}
+
+/* Badge para el contador del carrito */
+.cart-count {
+    background-color: red;
+    color: white;
+    font-size: 0.7rem;
+    border-radius: 50%;
+    padding: 0.1rem 0.4rem;
+    position: absolute;
+    top: -5px;
+    right: -10px;
+    display: inline-block;
 }
 
 .hidden {
@@ -291,11 +398,12 @@ header .auth {
 
 #completeOrderBtn:hover {
     background-color: #e65c00;
+    transition: 0.6s;
 }
 
 /* Footer */
 footer {
-    background-color: #ff6f00;
+    background: linear-gradient(45deg, #fa6a46, #feb47b);
     color: white;
     text-align: center;
     width: 100%;
@@ -312,7 +420,6 @@ footer {
     max-width: 1200px;
     margin: 0 auto;
     padding-bottom: 3rem;
-    margin-right: 20%; 
 }
 
 .main-login {
@@ -328,19 +435,13 @@ footer {
     /* Espacio para el header fijo */
 }
 
-/* Menú de familias */
 .familias-menu {
     padding-top: 5em;
-    width: 20%;
+    width: 60%;
     background-color: #f4f4f4;
     padding: 1rem;
-    border-left: 1px solid #ccc;
     padding-bottom: 2em;
-    position: fixed;
-    top: 0;
-    right: 0;
-    height: 100vh; /* Para que ocupe toda la altura de la pantalla */
-    overflow-y: auto; /* Para hacer scroll si el contenido es largo */
+    margin-left: auto;
 }
 
 
@@ -360,10 +461,12 @@ footer {
     cursor: pointer;
     color: #666;
     padding-top: 0.7em;
+    transition: 1s;
 }
 
 .subfamilias-container p:hover {
-    color: #ff6f00;
+    transition: 0.8s;
+    text-decoration: underline;
 }
 
 
@@ -392,8 +495,9 @@ footer {
 }
 
 .familias-menu ul li p:hover {
-    background-color: #ff6f00;
-    color: white;
+    color: orange;
+    transition: 0.6s;
+    text-decoration: underline;
 }
 
 
@@ -636,18 +740,25 @@ tbody tr:nth-child(even) {
 }
 
 /* Estilos para el div de productos */
+#productos {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 1rem;
+}
+
 .product {
     background-color: white;
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     padding: 1rem;
-    margin-bottom: 1rem;
     transition: transform 0.3s, box-shadow 0.3s;
-    display: flex;
-    flex-direction: column;
     align-items: center;
     text-align: center;
-    margin: 1rem;
+}
+
+/* Responsividad: 1 columna en pantallas pequeñas */
+@media (max-width: 768px) {
+    
 }
 
 .product:hover {
@@ -672,16 +783,6 @@ tbody tr:nth-child(even) {
     font-size: 0.9rem;
     color: #666;
     margin-bottom: 0.5rem;
-}
-
-/* Contenedor de productos */
-#productos {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    /* Centrar los productos */
-    gap: 1rem;
-    /* Añadir espacio entre los productos */
 }
 
 form {
@@ -723,17 +824,11 @@ form button {
 
 form button:hover {
     background-color: #e65c00;
-}
-
-header nav ul li a.cart-highlight {
-    background-color: #f0e68c;
-    color: #ff6f00;
-    border-radius: 5px;
-    padding: 0.5rem 1rem;
+    transition: 0.5s;
 }
 
 /* Highlight para el carrito */
-header nav ul li a.cart-highlight {
+.carrito a.cart-highlight {
     background-color: #f0e68c;
     color: #ff6f00;
     border-radius: 5px;
@@ -806,6 +901,7 @@ header nav ul li a.cart-highlight {
 
 .cart-item .remove-btn:hover {
     background-color: #e65c00;
+    transition: 0.5s;
 }
 
 .cart-summary {
@@ -848,15 +944,18 @@ header nav ul li a.cart-highlight {
 
 .section-cart button:hover {
     background-color: #e65c00;
+    transition: 0.5s;
 }
 
 @media (max-width: 768px) {
     header nav ul {
         flex-direction: column;
     }
-
-    header .logo h1 {
-        font-size: 1.5rem;
+    #productos {
+        grid-template-columns: 1fr;
+    }
+    .recently-viewed-items {
+        grid-template-columns: 1fr;
     }
 
     .btn-auth {
@@ -945,7 +1044,9 @@ header nav ul li a.cart-highlight {
     #hero {
         padding-right: 0;
     }
-
+    .recently-viewed-items {
+        grid-template-columns: repeat(1, 1fr);
+    }
     .product {
         flex: 1 1 calc(50% - 2rem);
     }
@@ -957,8 +1058,8 @@ header nav ul li a.cart-highlight {
         padding: 1rem;
     }
 
-    header .logo h1 {
-        font-size: 1.5rem;
+    .recently-viewed-items {
+        grid-template-columns: repeat(1, 1fr);
     }
 
     .btn-auth {
