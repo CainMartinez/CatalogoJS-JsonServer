@@ -87,7 +87,7 @@ function displayProducts(products, productContainer) {
     productContainer.innerHTML = ''; // Limpiar el contenedor
 
     if (products.length === 0) {
-        productContainer.innerHTML = '<p>No hay productos disponibles.</p>';
+        productContainer.innerHTML = '<h1>No hay productos disponibles.</h1><hr>';
         return;
     }
 
