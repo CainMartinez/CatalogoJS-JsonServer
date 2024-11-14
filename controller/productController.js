@@ -345,12 +345,12 @@ function initCarousel() {
 // Función para obtener el producto genérico (con variantes) y sus artículos
 async function fetchGenericProduct(refProducto) {
     try {
-        // 1. Obtener el producto genérico
+        // Obtener el producto genérico
         const response = await fetch(`https://www.es-tela.com/api/?r=es/producto/${refProducto}&cli=003328&apikey=453971e94725572b4d171a6805d1fb95`);
         if (!response.ok) throw new Error('Error al obtener el producto genérico.');
         const productData = await response.json(); // Obtenemos el producto genérico
 
-        // 2. Crear un array para almacenar las promesas de los artículos
+        // Crear un array para almacenar las promesas de los artículos
         const articlePromises = Object.keys(productData.refArticulosHijos).map(async (articleId) => {
             const articleResponse = await fetch(`https://www.es-tela.com/api/?r=es/articulo/${articleId}&cli=003328&apikey=453971e94725572b4d171a6805d1fb95`);
             if (!articleResponse.ok) throw new Error(`Error al obtener el artículo con ID ${articleId}`);
@@ -358,10 +358,10 @@ async function fetchGenericProduct(refProducto) {
             return articleData; // Retorna el artículo específico
         });
 
-        // 3. Esperar a que todas las promesas se resuelvan
+        // Esperar a que todas las promesas se resuelvan
         const articles = await Promise.all(articlePromises);
 
-        // 4. Combinar el producto genérico con sus artículos
+        // Combinar el producto genérico con sus artículos
         productData.articulosHijos = articles; // Agregar la propiedad 'articles' al producto genérico
 
         return productData; // Retorna el objeto combinado
